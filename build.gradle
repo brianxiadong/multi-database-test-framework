@@ -1,0 +1,46 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group 'com.brianxiadong'
+version '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    // Spring Boot Test
+    api 'org.springframework.boot:spring-boot-starter-test'
+    
+    // TestContainers
+    def testcontainersVersion = "1.19.7"
+    api "org.testcontainers:testcontainers:${testcontainersVersion}"
+    api "org.testcontainers:junit-jupiter:${testcontainersVersion}"
+    api "org.testcontainers:mysql:${testcontainersVersion}"
+    api "org.testcontainers:oceanbase:${testcontainersVersion}"
+    
+    // Database Drivers
+    api 'com.mysql:mysql-connector-j'
+    api 'com.alipay.oceanbase:oceanbase-client'
+    
+    // Connection Pool (for SwitchableDataSource)
+    api 'com.zaxxer:HikariCP'
+    
+    // JUnit 5
+    api 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+} 
